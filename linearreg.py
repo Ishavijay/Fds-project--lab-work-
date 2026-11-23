@@ -2,9 +2,9 @@
 import pandas as pd
 
 
-# ==========================================
+
 # 1. LOAD DATASET
-# ==========================================
+
 
 df = pd.read_excel(
     "hotel_accounts_analysis_ready(4).xlsx",
@@ -17,7 +17,7 @@ print(df.head())
 
 # ==========================================
 # 2. HANDLE MISSING VALUES
-# ==========================================
+
 
 def calculate_mean(values):
 
@@ -323,9 +323,7 @@ for value in Y_pred_scaled:
     Y_pred.append(value * Y_std + Y_mean)
 
 
-# ==========================================
 # 11. CALCULATE MAE
-# ==========================================
 
 def calculate_mae(actual, predicted):
 
@@ -337,9 +335,8 @@ def calculate_mae(actual, predicted):
     return total / len(actual)
 
 
-# ==========================================
 # 12. CALCULATE MSE
-# ==========================================
+
 
 def calculate_mse(actual, predicted):
 
@@ -351,9 +348,8 @@ def calculate_mse(actual, predicted):
     return total / len(actual)
 
 
-# ==========================================
+
 # 13. CALCULATE RMSE
-# ==========================================
 
 def calculate_rmse(actual, predicted):
 
@@ -362,9 +358,8 @@ def calculate_rmse(actual, predicted):
     return mse ** 0.5
 
 
-# ==========================================
 # 14. CALCULATE R-SQUARED
-# ==========================================
+
 
 def calculate_r2(actual, predicted):
 
@@ -387,9 +382,7 @@ def calculate_r2(actual, predicted):
     return 1 - (ss_residual / ss_total)
 
 
-# ==========================================
 # 15. MODEL EVALUATION
-# ==========================================
 
 mae = calculate_mae(Y_test, Y_pred)
 
@@ -407,9 +400,8 @@ print("RMSE:", rmse)
 print("R2 Score:", r2)
 
 
-# ==========================================
+
 # 16. CONVERT WEIGHTS TO ORIGINAL SCALE
-# ==========================================
 
 coefficients = []
 
@@ -438,9 +430,7 @@ for j in range(len(feature_names)):
     print(feature_names[j], ":", coefficients[j])
 
 
-# ==========================================
 # 17. CREATE PREDICTION DATAFRAME
-# ==========================================
 
 results = pd.DataFrame({
 
@@ -450,9 +440,7 @@ results = pd.DataFrame({
 })
 
 
-# ==========================================
 # 18. SAVE RESULTS
-# ==========================================
 
 coefficient_df = pd.DataFrame({
 
