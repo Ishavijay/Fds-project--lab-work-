@@ -1,0 +1,242 @@
+{
+  "unit_1": {
+    "analytics_types": {
+      "descriptive": "What happened?",
+      "diagnostic": "Why did it happen?",
+      "predictive": "What might happen next?",
+      "prescriptive": "What should we do?"
+    },
+    "crisp_dm_steps": [
+      "Understand the problem",
+      "Understand the data",
+      "Prepare the data",
+      "Build a model",
+      "Check the results",
+      "Use and monitor the result"
+    ],
+    "semma_steps": [
+      "Sample",
+      "Explore",
+      "Modify",
+      "Model",
+      "Assess"
+    ]
+  },
+  "unit_2": {
+    "average": 4.0,
+    "conditional_probability": 0.4,
+    "correlation": 1.0,
+    "normal_probability": 0.9750021738917761
+  },
+  "unit_3": {
+    "load_csv_workbook_shape": [
+      100,
+      29
+    ],
+    "describe_data": {
+      "x": {
+        "count": 4.0,
+        "mean": 2.5,
+        "std": 1.2909944487358056,
+        "min": 1.0,
+        "25%": 1.75,
+        "50%": 2.5,
+        "75%": 3.25,
+        "max": 4.0,
+        "unique": NaN,
+        "top": NaN,
+        "freq": NaN
+      },
+      "y": {
+        "count": 4.0,
+        "mean": 4.75,
+        "std": 2.5,
+        "min": 2.0,
+        "25%": 3.5,
+        "50%": 4.5,
+        "75%": 5.75,
+        "max": 8.0,
+        "unique": NaN,
+        "top": NaN,
+        "freq": NaN
+      },
+      "group": {
+        "count": 4,
+        "mean": NaN,
+        "std": NaN,
+        "min": NaN,
+        "25%": NaN,
+        "50%": NaN,
+        "75%": NaN,
+        "max": NaN,
+        "unique": 2,
+        "top": "a",
+        "freq": 2
+      },
+      "missing": {
+        "count": 3.0,
+        "mean": 2.6666666666666665,
+        "std": 1.5275252316519465,
+        "min": 1.0,
+        "25%": 2.0,
+        "50%": 3.0,
+        "75%": 3.5,
+        "max": 4.0,
+        "unique": NaN,
+        "top": NaN,
+        "freq": NaN
+      }
+    },
+    "fill_missing": {
+      "x": [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "y": [
+        2.0,
+        4.0,
+        5.0,
+        8.0
+      ],
+      "group": [
+        "a",
+        "a",
+        "b",
+        "b"
+      ],
+      "missing": [
+        1.0,
+        0.0,
+        3.0,
+        4.0
+      ]
+    },
+    "show_histogram": "saved plot",
+    "show_scatter_plot": "saved plot"
+  },
+  "unit_4": {
+    "make_category_columns": {
+      "x": [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "group_a": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "group_b": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    "scale_numbers": [
+      [
+        -1.3416407864998738,
+        -1.2701705922171767
+      ],
+      [
+        -0.4472135954999579,
+        -0.3464101615137754
+      ],
+      [
+        0.4472135954999579,
+        0.11547005383792514
+      ],
+      [
+        1.3416407864998738,
+        1.5011106998930268
+      ]
+    ],
+    "fit_linear_model": {
+      "coefficients": [
+        2.0
+      ],
+      "intercept": 0.0,
+      "prediction": [
+        8.0
+      ]
+    },
+    "gradient_descent": 2.9999999993888893
+  },
+  "unit_5": {
+    "train_classifier": "manual random forest trained",
+    "make_predictions": [
+      "low",
+      "high"
+    ],
+    "check_accuracy": 1.0,
+    "make_clusters": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "find_frequent_items": {
+      "('cake',)": 0.6666666666666666,
+      "('cake', 'tea')": 0.6666666666666666,
+      "('tea',)": 1.0
+    }
+  },
+  "unit_6": {
+    "read_data_file_shape": [
+      100,
+      29
+    ],
+    "make_category": [
+      "a",
+      "a",
+      "b",
+      "b"
+    ],
+    "make_matrix": [
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        4.0
+      ],
+      [
+        3.0,
+        5.0
+      ],
+      [
+        4.0,
+        8.0
+      ]
+    ],
+    "column_as_list": [
+      1.0,
+      2.0,
+      3.0,
+      4.0
+    ],
+    "summarize_column": {
+      "count": 4.0,
+      "mean": 2.5,
+      "std": 1.2909944487358056,
+      "min": 1.0,
+      "25%": 1.75,
+      "50%": 2.5,
+      "75%": 3.25,
+      "max": 4.0
+    },
+    "count_values": {
+      "a": 2,
+      "b": 2
+    }
+  },
+  "menu_classifier_on_workbook": {
+    "prediction_count": 5,
+    "training_accuracy": 0.99
+  }
+}

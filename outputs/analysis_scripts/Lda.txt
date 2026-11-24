@@ -1,0 +1,28 @@
+Dataset Shape: 100 15
+
+LDA Results
+Original Features: 15
+Reduced Features: 1
+
+LDA Discriminant Weights:
+Transaction_Amount_INR : -0.06304683297124497
+Day_Index : 0.05344528832981311
+GST_Rate : 0.0219526459973466
+Approval_Pending : 4.7260990505115704e-05
+Department_Food & Beverage : 0.00023145053048345012
+Department_Front Office : 0.0029743623968318325
+Department_Housekeeping : -0.0037618240888722112
+Department_Kitchen : -0.0008110001730706687
+Department_Maintenance : 0.0009637121551666972
+Department_Sales & Events : 0.0014575207765544545
+Department_Spa & Recreation : -0.0002701905386004148
+Payment_Mode_Cash : -9114.808656669073
+Payment_Mode_Credit Card : -9114.806715488958
+Payment_Mode_POS Settlement : 0.020688879096655823
+Payment_Mode_UPI : -9114.80789702042
+
+LDA Threshold: 2278.7116397604896
+
+Classification Accuracy: 100.0 %
+
+LDA completed successfully!

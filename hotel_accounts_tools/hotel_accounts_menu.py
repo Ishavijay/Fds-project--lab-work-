@@ -9,38 +9,38 @@ DATA_FILE = PROJECT_FOLDER / "data" / "hotel_accounts_analysis_ready.xlsx"
 OUTPUT_FOLDER = PROJECT_FOLDER / "outputs" / "hotel_accounts_tools"
 sys.path.insert(0, str(PROJECT_FOLDER))
 
-from fds_unit_functions.unit_1_intro_data_science import (
+from fds_unit_functions.unit_1_functions import (
     analytics_types,
     crisp_dm_steps,
     semma_steps,
 )
-from fds_unit_functions.unit_2_probability_statistics import (
+from fds_unit_functions.unit_2_functions import (
     average,
     conditional_probability,
     correlation,
     normal_probability,
 )
-from fds_unit_functions.unit_3_data_sources_visualization import (
+from fds_unit_functions.unit_3_functions import (
     describe_data,
     fill_missing,
     load_csv,
     show_histogram,
     show_scatter_plot,
 )
-from fds_unit_functions.unit_4_feature_engineering_optimization import (
+from fds_unit_functions.unit_4_functions import (
     fit_linear_model,
     gradient_descent,
     make_category_columns,
     scale_numbers,
 )
-from fds_unit_functions.unit_5_machine_learning import (
+from fds_unit_functions.unit_5_functions import (
     check_accuracy,
     find_frequent_items,
     make_clusters,
     make_predictions,
     train_classifier,
 )
-from fds_unit_functions.unit_6_data_analysis_tools import (
+from fds_unit_functions.unit_6_functions import (
     column_as_list,
     count_values,
     make_category,
@@ -194,119 +194,196 @@ def main():
             match choice:
                 case "1" | "analytics_types":
                     print(analytics_types())
+
                 case "2" | "crisp_dm_steps":
                     print("\n".join(crisp_dm_steps()))
+
                 case "3" | "semma_steps":
                     print(", ".join(semma_steps()))
+
                 case "4" | "average":
-                    print(average(data["Transaction_Amount_INR"].dropna().tolist()))
+                    amounts = data["Transaction_Amount_INR"].dropna().tolist()
+                    print(average(amounts))
+
                 case "5" | "conditional_probability":
                     taxable = data["GST_Rate"] > 0
                     revenue = data["Transaction_Type"] == "Revenue Receipt"
                     chance_of_both = (taxable & revenue).mean()
                     chance_of_b = taxable.mean()
-                    print(conditional_probability(chance_of_both, chance_of_b))
+                    probability = conditional_probability(
+                        chance_of_both, chance_of_b
+                    )
+                    print(probability)
+
                 case "6" | "correlation":
-                    paired = data[["Day_Index", "Transaction_Amount_INR"]].dropna()
-                    print(correlation(
+                    paired_columns = ["Day_Index", "Transaction_Amount_INR"]
+                    paired = data[paired_columns].dropna()
+                    correlation_value = correlation(
                         paired["Day_Index"].tolist(),
                         paired["Transaction_Amount_INR"].tolist(),
-                    ))
+                    )
+                    print(correlation_value)
+
                 case "7" | "normal_probability":
                     amounts = data["Transaction_Amount_INR"]
-                    print(normal_probability(
-                        amounts.quantile(0.75), amounts.mean(), amounts.std()
-                    ))
+                    probability = normal_probability(
+                        amounts.quantile(0.75),
+                        amounts.mean(),
+                        amounts.std(),
+                    )
+                    print(probability)
+
                 case "8" | "load_csv":
                     loaded_data = load_csv(DATA_FILE)
                     print(loaded_data.head())
                     print(f"Rows and columns: {loaded_data.shape}")
+
                 case "9" | "describe_data":
-                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
-                    print(describe_data(data[columns]).round(2))
+                    columns = [
+                        "Transaction_Amount_INR",
+                        "GST_Rate",
+                        "Day_Index",
+                    ]
+                    summary = describe_data(data[columns]).round(2)
+                    print(summary)
+
                 case "10" | "fill_missing":
-                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
+                    columns = [
+                        "Transaction_Amount_INR",
+                        "GST_Rate",
+                        "Day_Index",
+                    ]
                     numbers = data[columns]
                     cleaned_numbers = fill_missing(numbers, numbers.median())
                     print(cleaned_numbers.head())
+
                 case "11" | "show_histogram":
                     show_histogram(data, "Transaction_Amount_INR")
+
                 case "12" | "show_scatter_plot":
-                    show_scatter_plot(data, "Day_Index", "Transaction_Amount_INR")
+                    show_scatter_plot(
+                        data,
+                        "Day_Index",
+                        "Transaction_Amount_INR",
+                    )
+
                 case "13" | "make_category_columns":
                     encoded = make_category_columns(data, "Transaction_Type")
                     print(encoded.head())
+
                 case "14" | "scale_numbers":
-                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
-                    print(scale_numbers(data[columns])[:5])
+                    columns = [
+                        "Transaction_Amount_INR",
+                        "GST_Rate",
+                        "Day_Index",
+                    ]
+                    scaled = scale_numbers(data[columns])
+                    print(scaled[:5])
+
                 case "15" | "fit_linear_model":
                     model = fit_linear_model(
-                        data[["Day_Index"]], data["Transaction_Amount_INR"]
+                        data[["Day_Index"]],
+                        data["Transaction_Amount_INR"],
                     )
                     print(f"Amount change per day: INR {model.coef_[0]:,.2f}")
+
                 case "16" | "gradient_descent":
                     target = data["Transaction_Amount_INR"].mean()
                     result = gradient_descent(
-                        lambda value: 2 * (value - target), 0, 0.1, 100
+                        lambda value: 2 * (value - target),
+                        0,
+                        0.1,
+                        100,
                     )
                     print(f"Estimated average amount: INR {result:,.2f}")
+
                 case "17" | "train_classifier":
                     features, answers = classifier_columns(data)
                     model = train_classifier(features, answers)
                     print(model)
+
                 case "18" | "make_predictions":
                     features, answers = classifier_columns(data)
                     model = train_classifier(features, answers)
-                    print(make_predictions(model, features.head()))
+                    predictions = make_predictions(model, features.head())
+                    print(predictions)
+
                 case "19" | "check_accuracy":
                     features, answers = classifier_columns(data)
                     model = train_classifier(features, answers)
                     accuracy = check_accuracy(model, features, answers)
                     print(f"Training accuracy: {accuracy:.1%}")
+
                 case "20" | "make_clusters":
                     columns = ["Transaction_Amount_INR", "Day_Index"]
                     scaled = scale_numbers(data[columns])
-                    print(make_clusters(scaled, number_of_groups=3)[:20])
+                    clusters = make_clusters(scaled, number_of_groups=3)
+                    print(clusters[:20])
+
                 case "21" | "find_frequent_items":
+                    columns = ["Department", "Account_Head", "Payment_Mode"]
                     baskets = data[
-                        ["Department", "Account_Head", "Payment_Mode"]
+                        columns
                     ].astype(str).values.tolist()
-                    print(find_frequent_items(baskets, minimum_fraction=0.2))
+                    frequent_items = find_frequent_items(
+                        baskets,
+                        minimum_fraction=0.2,
+                    )
+                    print(frequent_items)
+
                 case "22" | "read_data_file":
                     loaded_data = read_data_file(DATA_FILE)
                     print(loaded_data.head())
                     print(f"Rows and columns: {loaded_data.shape}")
+
                 case "23" | "make_category":
                     categories = make_category(data, "Transaction_Type")
                     print(categories["Transaction_Type"].dtype)
+
                 case "24" | "make_matrix":
-                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
-                    print(make_matrix(data, columns)[:5])
+                    columns = [
+                        "Transaction_Amount_INR",
+                        "GST_Rate",
+                        "Day_Index",
+                    ]
+                    matrix = make_matrix(data, columns)
+                    print(matrix[:5])
+
                 case "25" | "column_as_list":
                     print(column_as_list(data, "Transaction_Type")[:10])
+
                 case "26" | "summarize_column":
                     print(summarize_column(data, "Transaction_Amount_INR"))
+
                 case "27" | "count_values":
                     print(count_values(data, "Transaction_Type"))
+
                 case "28" | "show_preview":
                     show_preview(data)
+
                 case "29" | "show_summary":
                     show_summary(data)
+
                 case "30" | "check_data_quality":
                     check_data_quality(data)
+
                 case "31" | "clean_and_save_copy":
                     clean_and_save_copy(data)
+
                 case "32" | "save_amount_chart":
                     save_amount_chart(data)
+
                 case "33" | "classifier_columns":
                     features, answers = classifier_columns(data)
                     print("Classifier feature columns:")
                     print(features.head())
                     print("Transaction type labels:")
                     print(answers.head())
+
                 case "0" | "exit":
                     print("Goodbye.")
                     break
+
                 case _:
                     print("Enter one of the listed numbers.")
         except (ImportError, KeyError, ValueError) as error:

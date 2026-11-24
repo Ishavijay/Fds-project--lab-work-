@@ -1,0 +1,70 @@
+
+========== PAIRED SAMPLE T-TEST ==========
+Mean Debit: 2569.2
+Mean Credit: 5666.7
+Mean Difference: -3097.5
+SD of Differences: 8642.128972760021
+T Statistic: -3.584186269104888
+Degrees of Freedom: 99
+Reject H0
+
+========== INDEPENDENT SAMPLE T-TEST ==========
+Revenue Mean: 9444.5
+Expense Mean: 6423.0
+Revenue Sample Size: 60
+Expense Sample Size: 40
+T Statistic: 4.149124817946028
+Welch Degrees of Freedom: 93.84460164428556
+Use the t-table with the calculated degrees of freedom.
+Compare against the two-tailed critical value at alpha = 0.05.
+
+========== ONE-SAMPLE T-TEST ==========
+Sample Mean: 8235.9
+Sample SD: 3982.78957744215
+Hypothesized Mean: 5000
+T Statistic: 8.124707411929549
+Degrees of Freedom: 99
+Reject H0
+
+========== ONE-WAY ANOVA ==========
+Departments: ['Front Office', 'Food & Beverage', 'Housekeeping', 'Kitchen', 'Maintenance', 'Sales & Events', 'Administration', 'Spa & Recreation']
+Grand Mean: 8235.9
+SS Between: 14020242.333333315
+SS Within: 1556378426.6666656
+MS Between: 2002891.7619047593
+MS Within: 16917156.811594192
+F Statistic: 0.11839411221465272
+Degrees of Freedom: 7 92
+Fail to Reject H0
+
+========== TWO-WAY ANOVA ==========
+Full Model SSE: 1322940394.5142856
+Additive Model SSE: 1341231434.8538978
+Error Degrees of Freedom: 84
+MSE: 15749290.410884352
+
+Department F: 0.22104824647626678
+Department df: 7 84
+
+Transaction Type F: 0.48554199377655666
+Type df: 1 84
+
+Interaction F: 0.16591260270341437
+Interaction df: 7 84
+
+Note: These are treatment-coded partial tests. Main-effect tests are conditional on the chosen reference coding.
+
+========== ONE-SAMPLE Z-TEST ==========
+Sample Mean: 8235.9
+Sample SD: 3982.78957744215
+Hypothesized Mean: 5000
+Z Statistic: 8.124707411929549
+Reject H0
+
+========== ALL TESTS COMPLETED ==========
+1. Paired Sample t-test
+2. Independent Sample t-test
+3. One-Sample t-test
+4. One-Way ANOVA
+5. Two-Way ANOVA
+6. One-Sample Z-test

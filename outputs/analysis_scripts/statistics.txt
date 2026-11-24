@@ -1,0 +1,11 @@
+Mean:
+3097.5
+
+Median:
+4923.5
+
+Population Variance:
+73939529.25
+
+Population Standard Deviation:
+8598.80975775136

@@ -1,0 +1,35 @@
+{
+  "unit_functions": "success",
+  "scripts": {
+    "statistics.py": {
+      "status": "success",
+      "log": "outputs\\analysis_scripts\\statistics.txt",
+      "figures_saved": 0
+    },
+    "graphs.py": {
+      "status": "success",
+      "log": "outputs\\analysis_scripts\\graphs.txt",
+      "figures_saved": 5
+    },
+    "Hypotests.py": {
+      "status": "success",
+      "log": "outputs\\analysis_scripts\\Hypotests.txt",
+      "figures_saved": 0
+    },
+    "linearreg.py": {
+      "status": "success",
+      "log": "outputs\\analysis_scripts\\linearreg.txt",
+      "figures_saved": 0
+    },
+    "PCA.py": {
+      "status": "success",
+      "log": "outputs\\analysis_scripts\\PCA.txt",
+      "figures_saved": 0
+    },
+    "Lda.py": {
+      "status": "success",
+      "log": "outputs\\analysis_scripts\\Lda.txt",
+      "figures_saved": 0
+    }
+  }
+}

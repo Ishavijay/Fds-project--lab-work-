@@ -1,8 +1,9 @@
-"""Simple helpers for Unit I: Introduction to Data Science."""
+# Unit I: introductory data science ideas.
+# This module explains analytics types and the CRISP-DM and SEMMA workflows.
 
 
-# Explains the four main kinds of data analytics.
 def analytics_types():
+    # Return four kinds of analytics and the question each one answers.
     return {
         "descriptive": "What happened?",
         "diagnostic": "Why did it happen?",
@@ -11,8 +12,8 @@ def analytics_types():
     }
 
 
-# Gives the main steps to follow in a CRISP-DM data science project.
 def crisp_dm_steps():
+    # Return the six steps in the CRISP-DM data science process.
     return [
         "Understand the problem",
         "Understand the data",
@@ -23,7 +24,6 @@ def crisp_dm_steps():
     ]
 
 
-# Shows the five simple steps of the SEMMA data process.
 def semma_steps():
+    # Return the five steps in the SEMMA data process.
     return ["Sample", "Explore", "Modify", "Model", "Assess"]
-

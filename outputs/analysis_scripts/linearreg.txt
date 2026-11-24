@@ -1,0 +1,43 @@
+Dataset Shape: (100, 16)
+   Transaction_Amount_INR  ...  Payment_Mode_UPI
+0                    2800  ...                 0
+1                    2937  ...                 1
+2                    3074  ...                 0
+3                    1539  ...                 0
+4                    1652  ...                 0
+
+[5 rows x 16 columns]
+
+Independent Features: ['Day_Index', 'Is_Expense', 'GST_Rate', 'Approval_Pending', 'Department_Food & Beverage', 'Department_Front Office', 'Department_Housekeeping', 'Department_Kitchen', 'Department_Maintenance', 'Department_Sales & Events', 'Department_Spa & Recreation', 'Payment_Mode_Cash', 'Payment_Mode_Credit Card', 'Payment_Mode_POS Settlement', 'Payment_Mode_UPI']
+
+Training Records: 80
+Testing Records: 20
+
+Model Weights:
+[-2.9998226125371606e-16, 0.8149757729161233, -0.27517029596962134, 0.12383009998060758, 0.009395920827044012, 0.004850828547804971, 0.014383342282131659, -0.09418134634660429, -0.0684622246255038, 0.012014033358675775, 0.006938098977265221, -0.007560248947185799, 0.0, 0.16770254265165857, 0.006640421729577877, 0.1500367462504396]
+
+MODEL PERFORMANCE
+MAE: 1258.939949522695
+MSE: 2326485.2554699215
+RMSE: 1525.2820248956982
+R2 Score: 0.8508828784324867
+
+REGRESSION EQUATION
+Intercept: 1455.9406247156526
+Day_Index : 554.1096015208602
+Is_Expense : -2157.6368389758545
+GST_Rate : 9117.935042252524
+Approval_Pending : 169.02048584373756
+Department_Food & Beverage : 55.22450423212002
+Department_Front Office : 170.50910878804655
+Department_Housekeeping : -1116.4844105787265
+Department_Kitchen : -779.4116770592349
+Department_Maintenance : 142.42184332097207
+Department_Sales & Events : 86.08487455385472
+Department_Spa & Recreation : -93.80423720489145
+Payment_Mode_Cash : 0
+Payment_Mode_Credit Card : 1518.3986647897223
+Payment_Mode_POS Settlement : 60.12316407614102
+Payment_Mode_UPI : 1358.4504538447368
+
+Linear Regression Completed Successfully!

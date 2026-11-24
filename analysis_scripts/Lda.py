@@ -180,7 +180,8 @@ mean_1 = calculate_mean(class_1)
 
 def within_class_scatter(classes, means):
 
-    features = len(means)
+    # ``means`` contains one mean vector per class, so use the vector width.
+    features = len(means[0])
 
     scatter = [
         [0.0 for j in range(features)]

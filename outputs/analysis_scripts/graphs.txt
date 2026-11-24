@@ -1,0 +1,128 @@
+First five rows:
+  Transaction_ID Transaction_Date  ... Approval_Approved Approval_Pending
+0  HTL-2025-0001       2025-04-01  ...                 0                1
+1  HTL-2025-0002       2025-04-01  ...                 1                0
+2  HTL-2025-0003       2025-04-01  ...                 1                0
+3  HTL-2025-0004       2025-04-01  ...                 1                0
+4  HTL-2025-0005       2025-04-01  ...                 1                0
+
+[5 rows x 29 columns]
+
+Last five rows:
+   Transaction_ID Transaction_Date  ... Approval_Approved Approval_Pending
+95  HTL-2025-0096       2025-04-20  ...                 1                0
+96  HTL-2025-0097       2025-04-20  ...                 1                0
+97  HTL-2025-0098       2025-04-20  ...                 1                0
+98  HTL-2025-0099       2025-04-20  ...                 1                0
+99  HTL-2025-0100       2025-04-20  ...                 1                0
+
+[5 rows x 29 columns]
+
+Dataset Shape: (100, 29)
+
+Column Names:
+['Transaction_ID', 'Transaction_Date', 'Voucher_No', 'Department', 'Transaction_Type', 'Account_Code', 'Account_Head', 'Description', 'Counterparty', 'Payment_Mode', 'Debit_INR', 'Credit_INR', 'GST_Rate', 'GST_Amount_Original_INR', 'Net_Amount_Original_INR', 'Cost_Center', 'Approval_Status', 'Reference_No', 'Transaction_Amount_INR', 'Net_Amount_Recalculated_INR', 'GST_Amount_Recalculated_INR', 'GST_Check_Difference_INR', 'Day_Index', 'Day_Of_Week', 'Month', 'Is_Revenue', 'Is_Expense', 'Approval_Approved', 'Approval_Pending']
+
+Data Types:
+Transaction_ID                            str
+Transaction_Date               datetime64[us]
+Voucher_No                                str
+Department                                str
+Transaction_Type                          str
+Account_Code                            int64
+Account_Head                              str
+Description                               str
+Counterparty                              str
+Payment_Mode                              str
+Debit_INR                               int64
+Credit_INR                              int64
+GST_Rate                              float64
+GST_Amount_Original_INR               float64
+Net_Amount_Original_INR                 int64
+Cost_Center                               str
+Approval_Status                           str
+Reference_No                              str
+Transaction_Amount_INR                  int64
+Net_Amount_Recalculated_INR             int64
+GST_Amount_Recalculated_INR           float64
+GST_Check_Difference_INR                int64
+Day_Index                               int64
+Day_Of_Week                               str
+Month                                     str
+Is_Revenue                              int64
+Is_Expense                              int64
+Approval_Approved                       int64
+Approval_Pending                        int64
+dtype: object
+
+Missing Values:
+Transaction_ID                 0
+Transaction_Date               0
+Voucher_No                     0
+Department                     0
+Transaction_Type               0
+Account_Code                   0
+Account_Head                   0
+Description                    0
+Counterparty                   0
+Payment_Mode                   0
+Debit_INR                      0
+Credit_INR                     0
+GST_Rate                       0
+GST_Amount_Original_INR        0
+Net_Amount_Original_INR        0
+Cost_Center                    0
+Approval_Status                0
+Reference_No                   0
+Transaction_Amount_INR         0
+Net_Amount_Recalculated_INR    0
+GST_Amount_Recalculated_INR    0
+GST_Check_Difference_INR       0
+Day_Index                      0
+Day_Of_Week                    0
+Month                          0
+Is_Revenue                     0
+Is_Expense                     0
+Approval_Approved              0
+Approval_Pending               0
+dtype: int64
+
+Duplicate Rows: 0
+
+Descriptive Statistics:
+       Account_Code     Debit_INR  ...  Approval_Approved  Approval_Pending
+count    100.000000    100.000000  ...         100.000000        100.000000
+mean    4443.260000   2569.200000  ...           0.940000          0.060000
+std      542.540593   3766.620053  ...           0.238683          0.238683
+min     4001.000000      0.000000  ...           0.000000          0.000000
+25%     4002.000000      0.000000  ...           1.000000          0.000000
+50%     4004.000000      0.000000  ...           1.000000          0.000000
+75%     5103.250000   4957.250000  ...           1.000000          0.000000
+max     5108.000000  11822.000000  ...           1.000000          1.000000
+
+[8 rows x 15 columns]
+
+Medians:
+Account_Code                   4004.00
+Debit_INR                         0.00
+Credit_INR                     4923.50
+GST_Rate                          0.12
+GST_Amount_Original_INR        1051.14
+Net_Amount_Original_INR        2868.50
+Transaction_Amount_INR         8074.50
+Net_Amount_Recalculated_INR    4923.50
+GST_Amount_Recalculated_INR    1051.14
+GST_Check_Difference_INR          0.00
+Day_Index                        10.50
+Is_Revenue                        1.00
+Is_Expense                        0.00
+Approval_Approved                 1.00
+Approval_Pending                  0.00
+dtype: float64
+
+Outliers handled using IQR capping!
+
+--- STDERR ---
+D:\GIT VS\Fds-project--lab-work-\analysis_scripts\graphs.py:66: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.
+See https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.
+  categorical_cols = df_imputed.select_dtypes(

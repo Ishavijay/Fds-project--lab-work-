@@ -16,10 +16,10 @@ A simple Python project for exploring a hotel accounts dataset and practicing th
 
 ## 🚀 Run the interactive menu
 
-Use **Python 3.10 or newer** (the menu uses `match`/`case`). From the project root, install the packages used by the menu and unit functions:
+Use **Python 3.10 or newer** (the menu uses `match`/`case`). From the project root, install the packages used for workbook access, tables, and charts:
 
 ```bash
-python -m pip install pandas openpyxl matplotlib scikit-learn
+python -m pip install pandas openpyxl matplotlib numpy
 ```
 
 Then start the menu:
@@ -38,6 +38,8 @@ Choose a number or type a function name shown in the menu. Enter `0` to quit. Th
 - **Unit IV – Feature Engineering and Optimization:** `make_category_columns`, `scale_numbers`, `fit_linear_model`, `gradient_descent`
 - **Unit V – Machine Learning:** `train_classifier`, `make_predictions`, `check_accuracy`, `make_clusters`, `find_frequent_items`
 - **Unit VI – Data Analysis Tools:** `read_data_file`, `make_category`, `make_matrix`, `column_as_list`, `summarize_column`, `count_values`
+
+The statistics, regression, clustering, and classification examples are implemented with explicit Python steps so you can follow the algorithms. Pandas, NumPy, and Matplotlib still handle spreadsheet data, array output, and chart display.
 
 The menu also includes dataset helpers such as `show_preview`, `show_summary`, and `check_data_quality`.
 
