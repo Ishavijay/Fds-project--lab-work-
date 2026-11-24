@@ -1,14 +1,17 @@
 """Simple data analysis tool helpers for Unit VI."""
 
 
-# Reads a CSV file into a pandas table.
+# Reads a CSV or Excel file into a pandas table.
 def read_data_file(filename):
     try:
         import pandas as pd
     except ImportError as error:
         raise ImportError(
-            "Install pandas first: python -m pip install pandas"
+            "Install pandas and openpyxl: python -m pip install pandas openpyxl"
         ) from error
+
+    if str(filename).lower().endswith((".xlsx", ".xls")):
+        return pd.read_excel(filename, sheet_name="Analysis_Ready")
 
     return pd.read_csv(filename)
 
