@@ -1,7 +1,11 @@
+from pathlib import Path
+
 import pandas as pd
 # 1. READ DATA
 
-df = pd.read_excel("hotel_accounts_raw_100.xlsx")
+PROJECT_FOLDER = Path(__file__).resolve().parents[1]
+DATA_FILE = PROJECT_FOLDER / "data" / "hotel_accounts_raw_100.xlsx"
+df = pd.read_excel(DATA_FILE)
 #significance level used for all type of test is 0.05
 # Create transaction amount column
 amount = []

@@ -1,4 +1,6 @@
 
+from pathlib import Path
+
 import pandas as pd
 import math
 
@@ -7,8 +9,13 @@ import math
 # 1. LOAD DATASET
 # ==========================================
 
+PROJECT_FOLDER = Path(__file__).resolve().parents[1]
+DATA_FILE = PROJECT_FOLDER / "data" / "hotel_accounts_analysis_ready.xlsx"
+OUTPUT_FOLDER = PROJECT_FOLDER / "outputs"
+OUTPUT_FOLDER.mkdir(parents=True, exist_ok=True)
+
 df = pd.read_excel(
-    "hotel_accounts_analysis_ready(4).xlsx",
+    DATA_FILE,
     sheet_name="Regression_Encoded"
 )
 
@@ -488,7 +495,7 @@ weights_df = pd.DataFrame({
 
 })
 
-with pd.ExcelWriter("Manual_LDA_Results.xlsx") as writer:
+with pd.ExcelWriter(OUTPUT_FOLDER / "Manual_LDA_Results.xlsx") as writer:
 
     result_df.to_excel(
         writer,

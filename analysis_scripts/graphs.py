@@ -1,11 +1,15 @@
 
+from pathlib import Path
+
 import pandas as pd
 import numpy as np #is a Python library used for numerical calculations, mathematical operations and working with arrays.
 import matplotlib.pyplot as plt
 import seaborn as sns #Python data visualization library used to create attractive and informative statistical graphs.
 
 # 1. IMPORTING DATA
-df = pd.read_excel("hotel_accounts_analysis_ready.xlsx")
+PROJECT_FOLDER = Path(__file__).resolve().parents[1]
+DATA_FILE = PROJECT_FOLDER / "data" / "hotel_accounts_analysis_ready.xlsx"
+df = pd.read_excel(DATA_FILE)
 
 # Create a new variable
 df["Transaction_Amount_INR"] = (

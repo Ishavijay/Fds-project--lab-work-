@@ -1,13 +1,12 @@
-"""Run the project functions from a simple menu."""
+"""Choose a data or analysis function for the hotel accounts workbook."""
 
 from pathlib import Path
 import sys
 
 
-# The workbook stays in the project folder; results go inside this tools folder.
 PROJECT_FOLDER = Path(__file__).resolve().parent.parent
-DATA_FILE = PROJECT_FOLDER / "hotel_accounts_analysis_ready.xlsx"
-OUTPUT_FOLDER = Path(__file__).resolve().parent / "outputs"
+DATA_FILE = PROJECT_FOLDER / "data" / "hotel_accounts_analysis_ready.xlsx"
+OUTPUT_FOLDER = PROJECT_FOLDER / "outputs" / "hotel_accounts_tools"
 sys.path.insert(0, str(PROJECT_FOLDER))
 
 from fds_unit_functions.unit_1_intro_data_science import (
@@ -51,7 +50,7 @@ from fds_unit_functions.unit_6_data_analysis_tools import (
 )
 
 
-# Read the Analysis_Ready sheet from the Excel workbook.
+# Open the analysis-ready sheet in the hotel accounts workbook.
 def load_dataset():
     try:
         import pandas as pd
@@ -66,181 +65,14 @@ def load_dataset():
     return pd.read_excel(DATA_FILE, sheet_name="Analysis_Ready")
 
 
-# Show the three planning helpers from Unit I.
-def apply_unit_1(data):
-    print("\nAnalytics types:")
-    for name, question in analytics_types().items():
-        print(f"{name.title()}: {question}")
-
-    print("\nCRISP-DM steps:")
-    for step in crisp_dm_steps():
-        print(f"- {step}")
-
-    print("\nSEMMA steps:")
-    print(", ".join(semma_steps()))
-
-    print(f"\nThese steps can guide work on {len(data)} hotel transactions.")
-
-
-# Use Unit II functions with transaction amounts, dates and GST rates.
-def apply_unit_2(data):
-    amounts = data["Transaction_Amount_INR"].dropna().tolist()
-    amount_average = average(amounts)
-
-    taxable = data["GST_Rate"] > 0
-    revenue = data["Transaction_Type"] == "Revenue Receipt"
-    probability_taxable = taxable.mean()
-    probability_both = (taxable & revenue).mean()
-    revenue_given_taxable = conditional_probability(
-        probability_both, probability_taxable
-    )
-
-    day_and_amount = data[["Day_Index", "Transaction_Amount_INR"]].dropna()
-    day_amount_correlation = correlation(
-        day_and_amount["Day_Index"].tolist(),
-        day_and_amount["Transaction_Amount_INR"].tolist(),
-    )
-    amount_std = data["Transaction_Amount_INR"].std()
-    top_quartile = data["Transaction_Amount_INR"].quantile(0.75)
-    top_quartile_probability = normal_probability(
-        top_quartile, amount_average, amount_std
-    )
-
-    print(f"\nAverage transaction amount: INR {amount_average:,.2f}")
-    print(
-        "Chance of revenue when GST is charged: "
-        f"{revenue_given_taxable:.1%}"
-    )
-    print(f"Correlation between day and amount: {day_amount_correlation:.2f}")
-    print(
-        "Normal-curve estimate below the 75th percentile: "
-        f"{top_quartile_probability:.1%}"
-    )
-
-
-# Load the workbook with Unit III tools, summarize, fill gaps, and show two plots.
-def apply_unit_3(data):
-    unit_data = load_csv(DATA_FILE)
-    numeric_columns = [
-        "Transaction_Amount_INR",
-        "GST_Rate",
-        "Day_Index",
-    ]
-    numeric_data = unit_data[numeric_columns]
-
-    print("\nNumeric data summary:")
-    print(describe_data(numeric_data).round(2))
-
-    filled_data = fill_missing(numeric_data, numeric_data.median())
-    print(f"\nMissing numeric values after filling: {filled_data.isna().sum().sum()}")
-
-    print("\nShowing transaction amount histogram and day scatter plot.")
-    show_histogram(unit_data, "Transaction_Amount_INR")
-    show_scatter_plot(unit_data, "Day_Index", "Transaction_Amount_INR")
-
-
-# Use Unit IV helpers to encode categories, scale numbers and fit simple models.
-def apply_unit_4(data):
-    encoded_data = make_category_columns(data, "Transaction_Type")
-    print(f"\nColumns after category encoding: {len(encoded_data.columns)}")
-
-    number_columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
-    scaled_data = scale_numbers(data[number_columns])
-    print(f"Scaled numeric data shape: {scaled_data.shape}")
-
-    model = fit_linear_model(
-        data[["Day_Index"]], data["Transaction_Amount_INR"]
-    )
-    print(f"Linear model slope by day: INR {model.coef_[0]:,.2f}")
-
-    target_average = data["Transaction_Amount_INR"].mean()
-    estimate = gradient_descent(
-        lambda value: 2 * (value - target_average),
-        start=0,
-        step_size=0.1,
-        steps=100,
-    )
-    print(f"Gradient descent estimate of the average: INR {estimate:,.2f}")
-
-
-# Run the Unit V classifier, accuracy check, clustering and frequent-item search.
-def apply_unit_5(data):
-    from numpy import unique
-    from sklearn.model_selection import train_test_split
-
-    feature_columns = [
-        "Transaction_Amount_INR",
-        "GST_Rate",
-        "GST_Amount_Recalculated_INR",
-        "Day_Index",
-    ]
-    features = data[feature_columns]
-    answers = data["Transaction_Type"]
-    x_train, x_test, y_train, y_test = train_test_split(
-        features,
-        answers,
-        test_size=0.2,
-        random_state=42,
-        stratify=answers,
-    )
-
-    model = train_classifier(x_train, y_train)
-    predictions = make_predictions(model, x_test)
-    accuracy = check_accuracy(model, x_test, y_test)
-    print(f"\nClassifier test accuracy: {accuracy:.1%}")
-    print(f"First five predictions: {list(predictions[:5])}")
-    print("This is a practice result from a small dataset.")
-
-    cluster_columns = ["Transaction_Amount_INR", "Day_Index"]
-    scaled_data = scale_numbers(data[cluster_columns])
-    cluster_labels = make_clusters(scaled_data, number_of_groups=3)
-    print("\nRecords in each cluster:")
-    cluster_numbers, cluster_counts = unique(
-        cluster_labels, return_counts=True
-    )
-    print(dict(zip(cluster_numbers, cluster_counts)))
-
-    baskets = data[
-        ["Department", "Account_Head", "Payment_Mode"]
-    ].astype(str).values.tolist()
-    common_items = find_frequent_items(baskets, minimum_fraction=0.2)
-    print("\nCommon item or category pairs:")
-    for items, support in sorted(
-        common_items.items(), key=lambda result: result[1], reverse=True
-    )[:10]:
-        print(f"{items}: {support:.0%}")
-
-
-# Use Unit VI helpers for categories, lists, matrices and distributions.
-def apply_unit_6(data):
-    unit_data = read_data_file(DATA_FILE)
-    category_data = make_category(unit_data, "Transaction_Type")
-    print(f"\nTransaction type data type: {category_data['Transaction_Type'].dtype}")
-
-    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
-    matrix = make_matrix(unit_data, columns)
-    print(f"Numeric matrix shape: {matrix.shape}")
-
-    transaction_types = column_as_list(unit_data, "Transaction_Type")
-    print(f"First five transaction types: {transaction_types[:5]}")
-
-    print("\nTransaction amount distribution:")
-    print(summarize_column(unit_data, "Transaction_Amount_INR"))
-
-    print("\nCount by transaction type:")
-    print(count_values(unit_data, "Transaction_Type"))
-
-    print(f"\nThe menu loaded {len(data)} transactions for this example.")
-
-
-# Preview the dataset.
+# Print a short preview of the workbook.
 def show_preview(data):
     print("\nFirst five rows:")
     print(data.head())
     print(f"\nRows: {len(data)} | Columns: {len(data.columns)}")
 
 
-# Summarize revenue and expense totals and averages.
+# Show record counts, average amount and total amount by transaction type.
 def show_summary(data):
     summary = data.groupby("Transaction_Type")[
         "Transaction_Amount_INR"
@@ -250,13 +82,13 @@ def show_summary(data):
     print(summary.round(2))
 
 
-# Count missing cells and duplicate rows.
+# Count missing cells and duplicate rows without changing the data.
 def check_data_quality(data):
     print(f"\nMissing cells: {int(data.isna().sum().sum())}")
     print(f"Duplicate rows: {int(data.duplicated().sum())}")
 
 
-# Remove duplicate rows and save a separate workbook copy.
+# Save a copy without exact duplicate rows. The original workbook stays as is.
 def clean_and_save_copy(data):
     cleaned_data = data.drop_duplicates().copy()
     removed_rows = len(data) - len(cleaned_data)
@@ -269,7 +101,7 @@ def clean_and_save_copy(data):
     print(f"Saved cleaned copy: {output_file}")
 
 
-# Create and save a chart of average amount by transaction type.
+# Make and save a bar chart of average amounts by transaction type.
 def save_amount_chart(data):
     try:
         import matplotlib.pyplot as plt
@@ -296,7 +128,57 @@ def save_amount_chart(data):
     print(f"Chart saved: {output_file}")
 
 
-# Ask what to run and use match-case to select the action.
+# Prepare the columns used by the classifier examples.
+def classifier_columns(data):
+    feature_names = [
+        "Transaction_Amount_INR",
+        "GST_Rate",
+        "GST_Amount_Recalculated_INR",
+        "Day_Index",
+    ]
+    return data[feature_names], data["Transaction_Type"]
+
+
+# Show the available function names before asking for a choice.
+def show_menu():
+    print("\nHotel accounts functions")
+    print(" 1. analytics_types")
+    print(" 2. crisp_dm_steps")
+    print(" 3. semma_steps")
+    print(" 4. average")
+    print(" 5. conditional_probability")
+    print(" 6. correlation")
+    print(" 7. normal_probability")
+    print(" 8. load_csv")
+    print(" 9. describe_data")
+    print("10. fill_missing")
+    print("11. show_histogram")
+    print("12. show_scatter_plot")
+    print("13. make_category_columns")
+    print("14. scale_numbers")
+    print("15. fit_linear_model")
+    print("16. gradient_descent")
+    print("17. train_classifier")
+    print("18. make_predictions")
+    print("19. check_accuracy")
+    print("20. make_clusters")
+    print("21. find_frequent_items")
+    print("22. read_data_file")
+    print("23. make_category")
+    print("24. make_matrix")
+    print("25. column_as_list")
+    print("26. summarize_column")
+    print("27. count_values")
+    print("28. show_preview")
+    print("29. show_summary")
+    print("30. check_data_quality")
+    print("31. clean_and_save_copy")
+    print("32. save_amount_chart")
+    print("33. classifier_columns")
+    print(" 0. Exit")
+
+
+# Ask which function to run and call it in the matching case.
 def main():
     try:
         data = load_dataset()
@@ -305,53 +187,130 @@ def main():
         return
 
     while True:
-        print("\nHotel Accounts Project")
-        print("1. Run Unit I functions")
-        print("2. Run Unit II functions")
-        print("3. Run Unit III functions and plots")
-        print("4. Run Unit IV functions")
-        print("5. Run Unit V functions")
-        print("6. Run Unit VI functions")
-        print("7. Preview the dataset")
-        print("8. Summarize revenue and expenses")
-        print("9. Check data quality")
-        print("10. Save a copy without duplicate rows")
-        print("11. Save an average amount chart")
-        print("0. Exit")
-
-        choice = input("Choose an option: ").strip()
+        show_menu()
+        choice = input("Choose a function: ").strip().lower()
 
         try:
             match choice:
-                case "1":
-                    apply_unit_1(data)
-                case "2":
-                    apply_unit_2(data)
-                case "3":
-                    apply_unit_3(data)
-                case "4":
-                    apply_unit_4(data)
-                case "5":
-                    apply_unit_5(data)
-                case "6":
-                    apply_unit_6(data)
-                case "7":
+                case "1" | "analytics_types":
+                    print(analytics_types())
+                case "2" | "crisp_dm_steps":
+                    print("\n".join(crisp_dm_steps()))
+                case "3" | "semma_steps":
+                    print(", ".join(semma_steps()))
+                case "4" | "average":
+                    print(average(data["Transaction_Amount_INR"].dropna().tolist()))
+                case "5" | "conditional_probability":
+                    taxable = data["GST_Rate"] > 0
+                    revenue = data["Transaction_Type"] == "Revenue Receipt"
+                    chance_of_both = (taxable & revenue).mean()
+                    chance_of_b = taxable.mean()
+                    print(conditional_probability(chance_of_both, chance_of_b))
+                case "6" | "correlation":
+                    paired = data[["Day_Index", "Transaction_Amount_INR"]].dropna()
+                    print(correlation(
+                        paired["Day_Index"].tolist(),
+                        paired["Transaction_Amount_INR"].tolist(),
+                    ))
+                case "7" | "normal_probability":
+                    amounts = data["Transaction_Amount_INR"]
+                    print(normal_probability(
+                        amounts.quantile(0.75), amounts.mean(), amounts.std()
+                    ))
+                case "8" | "load_csv":
+                    loaded_data = load_csv(DATA_FILE)
+                    print(loaded_data.head())
+                    print(f"Rows and columns: {loaded_data.shape}")
+                case "9" | "describe_data":
+                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
+                    print(describe_data(data[columns]).round(2))
+                case "10" | "fill_missing":
+                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
+                    numbers = data[columns]
+                    cleaned_numbers = fill_missing(numbers, numbers.median())
+                    print(cleaned_numbers.head())
+                case "11" | "show_histogram":
+                    show_histogram(data, "Transaction_Amount_INR")
+                case "12" | "show_scatter_plot":
+                    show_scatter_plot(data, "Day_Index", "Transaction_Amount_INR")
+                case "13" | "make_category_columns":
+                    encoded = make_category_columns(data, "Transaction_Type")
+                    print(encoded.head())
+                case "14" | "scale_numbers":
+                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
+                    print(scale_numbers(data[columns])[:5])
+                case "15" | "fit_linear_model":
+                    model = fit_linear_model(
+                        data[["Day_Index"]], data["Transaction_Amount_INR"]
+                    )
+                    print(f"Amount change per day: INR {model.coef_[0]:,.2f}")
+                case "16" | "gradient_descent":
+                    target = data["Transaction_Amount_INR"].mean()
+                    result = gradient_descent(
+                        lambda value: 2 * (value - target), 0, 0.1, 100
+                    )
+                    print(f"Estimated average amount: INR {result:,.2f}")
+                case "17" | "train_classifier":
+                    features, answers = classifier_columns(data)
+                    model = train_classifier(features, answers)
+                    print(model)
+                case "18" | "make_predictions":
+                    features, answers = classifier_columns(data)
+                    model = train_classifier(features, answers)
+                    print(make_predictions(model, features.head()))
+                case "19" | "check_accuracy":
+                    features, answers = classifier_columns(data)
+                    model = train_classifier(features, answers)
+                    accuracy = check_accuracy(model, features, answers)
+                    print(f"Training accuracy: {accuracy:.1%}")
+                case "20" | "make_clusters":
+                    columns = ["Transaction_Amount_INR", "Day_Index"]
+                    scaled = scale_numbers(data[columns])
+                    print(make_clusters(scaled, number_of_groups=3)[:20])
+                case "21" | "find_frequent_items":
+                    baskets = data[
+                        ["Department", "Account_Head", "Payment_Mode"]
+                    ].astype(str).values.tolist()
+                    print(find_frequent_items(baskets, minimum_fraction=0.2))
+                case "22" | "read_data_file":
+                    loaded_data = read_data_file(DATA_FILE)
+                    print(loaded_data.head())
+                    print(f"Rows and columns: {loaded_data.shape}")
+                case "23" | "make_category":
+                    categories = make_category(data, "Transaction_Type")
+                    print(categories["Transaction_Type"].dtype)
+                case "24" | "make_matrix":
+                    columns = ["Transaction_Amount_INR", "GST_Rate", "Day_Index"]
+                    print(make_matrix(data, columns)[:5])
+                case "25" | "column_as_list":
+                    print(column_as_list(data, "Transaction_Type")[:10])
+                case "26" | "summarize_column":
+                    print(summarize_column(data, "Transaction_Amount_INR"))
+                case "27" | "count_values":
+                    print(count_values(data, "Transaction_Type"))
+                case "28" | "show_preview":
                     show_preview(data)
-                case "8":
+                case "29" | "show_summary":
                     show_summary(data)
-                case "9":
+                case "30" | "check_data_quality":
                     check_data_quality(data)
-                case "10":
+                case "31" | "clean_and_save_copy":
                     clean_and_save_copy(data)
-                case "11":
+                case "32" | "save_amount_chart":
                     save_amount_chart(data)
-                case "0":
+                case "33" | "classifier_columns":
+                    features, answers = classifier_columns(data)
+                    print("Classifier feature columns:")
+                    print(features.head())
+                    print("Transaction type labels:")
+                    print(answers.head())
+                case "0" | "exit":
                     print("Goodbye.")
                     break
                 case _:
-                    print("Choose one of the listed options.")
+                    print("Enter one of the listed numbers.")
         except (ImportError, KeyError, ValueError) as error:
-            print(f"Could not run that option: {error}")
+            print(f"Could not run that function: {error}")
 
 
 if __name__ == "__main__":

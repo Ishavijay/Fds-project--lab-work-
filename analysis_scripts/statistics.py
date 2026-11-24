@@ -1,9 +1,13 @@
 
+from pathlib import Path
+
 import pandas as pd
 import math # a built in python module 
 
 # Read the Excel file
-df = pd.read_excel("hotel_accounts_analysis_ready.xlsx",
+PROJECT_FOLDER = Path(__file__).resolve().parents[1]
+DATA_FILE = PROJECT_FOLDER / "data" / "hotel_accounts_analysis_ready.xlsx"
+df = pd.read_excel(DATA_FILE,
                    sheet_name="Analysis_Ready")
 
 
